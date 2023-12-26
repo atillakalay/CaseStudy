@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TurkMedya_MVC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2189adc0ad1a6b85a7b1c9df89ac5ae08ec4bca3")]
 [assembly: System.Reflection.AssemblyProductAttribute("TurkMedya_MVC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TurkMedya_MVC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
