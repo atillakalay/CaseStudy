@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\TurkMedya_MVC.props" />
+</Project>

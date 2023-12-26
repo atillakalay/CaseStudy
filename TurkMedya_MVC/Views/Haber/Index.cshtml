@@ -1,0 +1,99 @@
+﻿@model X.PagedList.IPagedList<NewsItem>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Haberler</title>
+</head>
+<body>
+    <h1>Son Haberler</h1>
+
+
+    <form method="get" asp-action="Index">
+        <label for="categoryFilter">Kategoriye Göre Filtrele:</label>
+        <select name="categoryFilter" id="categoryFilter">
+            <option value="">Tümü</option>
+            <option value="GÜNCEL">Güncel</option>
+            <option value="SAĞLIK">Sağlık</option>
+            <option value="SPOR">Spor</option>
+        </select>
+        <label for="keywordFilter">Anahtar Kelimeye Göre Filtrele:</label>
+        <input type="text" name="keywordFilter" id="keywordFilter" />
+
+        <button type="submit">Filtrele</button>
+    </form>
+
+    <div>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var newsItem in Model)
+            {
+                <div>
+                    <h2>@newsItem.title</h2>
+                    @if (!string.IsNullOrEmpty(newsItem.imageUrl))
+                    {
+                        <img src="@newsItem.imageUrl" alt="Haber Görseli" />
+                    }
+                    <p>@newsItem.shortText</p>
+                    <p><strong>Kategori:</strong> @newsItem.category.title</p>
+                    <p><strong>Yayın Tarihi:</strong> @newsItem.publishDate</p>
+                    <a href="@newsItem.fullPath"><strong>Haber Detay</strong></a>
+                    <hr />
+                </div>
+            }
+
+            <!-- Manuel sayfalama bağlantıları -->
+            @if (string.IsNullOrEmpty(ViewBag.CategoryFilter) && string.IsNullOrEmpty(ViewBag.KeywordFilter))
+            {
+                <!-- Filtre uygulanmamışsa -->
+                <div>
+                    @if (Model.HasPreviousPage)
+                    {
+                        <a href="@Url.Action("Index", new { page = Model.PageNumber - 1 })">Geri</a>
+                    }
+
+                    <!-- Tüm sayfa numaralarını gösterme -->
+                    @for (var i = 1; i <= Model.PageCount; i++)
+                    {
+                        <a href="@Url.Action("Index", new { page = i })">@i</a>
+                    }
+
+                    @if (Model.HasNextPage)
+                    {
+                        <a href="@Url.Action("Index", new { page = Model.PageNumber + 1 })">İleri</a>
+                    }
+                </div>
+            }
+            else
+            {
+                <!-- Filtre uygulanmışsa -->
+                <div>
+                    @if (Model.HasPreviousPage)
+                    {
+                        <a href="@Url.Action("Index", new { page = Model.PageNumber - 1, categoryFilter = ViewBag.CategoryFilter, keywordFilter = ViewBag.KeywordFilter })">Geri</a>
+                    }
+
+                    @for (var i = 1; i <= Model.PageCount; i++)
+                    {
+                        <a href="@Url.Action("Index", new { page = i, categoryFilter = ViewBag.CategoryFilter, keywordFilter = ViewBag.KeywordFilter })">@i</a>
+                    }
+
+                    @if (Model.HasNextPage)
+                    {
+                        <a href="@Url.Action("Index", new { page = Model.PageNumber + 1, categoryFilter = ViewBag.CategoryFilter, keywordFilter = ViewBag.KeywordFilter })">İleri</a>
+                    }
+                </div>
+
+            }
+
+        }
+        else
+        {
+            <p>Haber bulunamadı.</p>
+        }
+    </div>
+
+    <!-- Gerekli JavaScript bağlantıları veya betikler -->
+
+</body>
+</html>
